@@ -1,0 +1,11 @@
+serenity-java/target/
+playwright-python/reports/
+playwright-python/screenshots/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
