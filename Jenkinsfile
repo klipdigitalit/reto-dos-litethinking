@@ -37,4 +37,3 @@ pipeline {
             archiveArtifacts artifacts: 'playwright-python/screenshots/**', allowEmptyArchive: true
         }
     }
-}
