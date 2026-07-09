@@ -1,54 +1,31 @@
 pipeline {
     agent any
 
-    environment {
-        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21.0.11'
-    }
-
     stages {
-
         stage('Ejecución Serenity BDD') {
             steps {
-                echo 'Ejecutando pruebas Serenity BDD...'
-
                 dir('serenity-java') {
-                    bat 'mvn clean verify'
+                    sh 'mvn clean verify'
                 }
             }
         }
 
         stage('Ejecución Playwright Python') {
             steps {
-                echo 'Ejecutando pruebas Playwright...'
-
                 dir('playwright-python') {
-                    bat 'python -m pip install -r requirements.txt'
-                    bat 'python -m playwright install'
-                    bat 'python -m pytest'
+                    sh 'python3 -m pip install -r requirements.txt'
+                    sh 'python3 -m playwright install --with-deps'
+                    sh 'python3 -m pytest'
                 }
             }
         }
-
     }
 
     post {
-
         always {
-
-            archiveArtifacts artifacts: 'serenity-java/target/site/serenity/**', fingerprint: true
-            archiveArtifacts artifacts: 'playwright-python/reports/**', fingerprint: true
-            archiveArtifacts artifacts: 'playwright-python/screenshots/**', fingerprint: true
-
+            archiveArtifacts artifacts: 'serenity-java/target/site/serenity/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-python/reports/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-python/screenshots/**', allowEmptyArchive: true
         }
-
-        success {
-            echo 'Automatización ejecutada correctamente.'
-        }
-
-        failure {
-            echo 'Se presentaron errores durante la ejecución.'
-        }
-
     }
-
 }
