@@ -19,7 +19,7 @@ pipeline {
                         sh 'python3 -m venv .venv'
                         sh '.venv/bin/python -m pip install --upgrade pip'
                         sh '.venv/bin/python -m pip install -r requirements.txt'
-                        sh '.venv/bin/python -m playwright install --with-deps'
+                        sh '.venv/bin/python -m playwright install'
                         sh '.venv/bin/python -m pytest'
                     }
                 }
